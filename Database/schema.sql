@@ -84,7 +84,6 @@ ALTER TABLE voice ENABLE ROW LEVEL SECURITY;
 
 
 
-
 -- POLICIES
 
 -- USER
@@ -110,89 +109,89 @@ WITH CHECK (id = (select auth.uid()));
 -- BAND
 CREATE POLICY "User can insert their own band"
 ON band FOR INSERT TO authenticated
-WITH CHECK (user_id = auth.uid());
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can update their own band"
 ON band FOR UPDATE TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id = (select auth.uid()))
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can delete their own band"
 ON band FOR DELETE TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
 
 CREATE POLICY "User can select their own band"
 ON band FOR SELECT TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
 
 -- ALBUM
 CREATE POLICY "User can insert their own album"
 ON album FOR INSERT TO authenticated
-WITH CHECK (user_id = auth.uid());
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can update their own album"
 ON album FOR UPDATE TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id = (select auth.uid()))
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can delete their own album"
 ON album FOR DELETE TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
 
 CREATE POLICY "User can select their own album"
 ON album FOR SELECT TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
 
 -- SONG
 CREATE POLICY "User can insert their own song"
 ON song FOR INSERT TO authenticated
-WITH CHECK (user_id = auth.uid());
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can update their own song"
 ON song FOR UPDATE TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id = (select auth.uid()))
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can delete their own song"
 ON song FOR DELETE TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
 
 CREATE POLICY "User can select their own song"
 ON song FOR SELECT TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
 
 -- STERO FIELD
 CREATE POLICY "User can insert their own stereo_field"
 ON stereo_field FOR INSERT TO authenticated
-WITH CHECK (user_id = auth.uid());
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can update their own stereo_field"
 ON stereo_field FOR UPDATE TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id = (select auth.uid()))
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can delete their own stereo_field"
 ON stereo_field FOR DELETE TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
 
 CREATE POLICY "User can select their own stereo_field"
 ON stereo_field FOR SELECT TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
 
 -- VOICE
 CREATE POLICY "User can insert their own voice"
 ON voice FOR INSERT TO authenticated
-WITH CHECK (user_id = auth.uid());
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can update their own voice"
 ON voice FOR UPDATE TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id = (select auth.uid()))
+WITH CHECK (user_id = (select auth.uid()));
 
 CREATE POLICY "User can delete their own voice"
 ON voice FOR DELETE TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
 
 CREATE POLICY "User can select their own voice"
 ON voice FOR SELECT TO authenticated
-USING (user_id = auth.uid());
+USING (user_id = (select auth.uid()));
