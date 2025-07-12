@@ -23,6 +23,7 @@ export default defineConfig({
       crypto: "crypto-browserify",
       components: path.resolve(__dirname, "src/components"),
       clients: path.resolve(__dirname, "src/clients"),
+      "@mui/styled-engine": "@mui/styled-engine-sc",
     },
   },
 });

@@ -8,11 +8,12 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    // "strictNullChecks": true,
+    "strictNullChecks": true,
     "baseUrl": "./src",
     "paths": {
       "components/*": ["components/*"],
-      "clients/*": ["clients/*"]
+      "clients/*": ["clients/*"],
+      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
     }
   },
   "include": ["src", "env.d.ts"]
