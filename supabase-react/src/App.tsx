@@ -1,4 +1,3 @@
-import { useState, useEffect, StrictMode } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,12 +6,14 @@ import {
 } from "react-router-dom";
 
 import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { CircularProgress, Box } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AuthPage from "./pages/AuthPage";
 import AccountPage from "./pages/AccountPage";
+import StereoFieldPage from "./pages/StereoFieldPage";
 import { useUserSession } from "hooks/useUserSession";
 
 import theme from "./theme";
@@ -30,11 +31,8 @@ const AppRoutes = () => {
     <Router>
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/account" element={<AccountPage session={session} />} />
-        <Route
-          path="/"
-          element={<Navigate to={session ? "/account" : "/auth"} replace />}
-        />
+        {/* <Route path="/" element={<AccountPage session={session} />} /> */}
+        <Route path="/" element={<StereoFieldPage />} />
       </Routes>
     </Router>
   );
@@ -42,15 +40,20 @@ const AppRoutes = () => {
 
 const App = () => {
   return (
-    <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline>
           <StyledThemeProvider theme={theme}>
-            <AppRoutes />
+            <Box
+              bgcolor="background.default"
+              sx={{ padding: 0, margin: 0, width: "100%" }}
+            >
+              <AppRoutes />
+            </Box>
           </StyledThemeProvider>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </StrictMode>
+        </CssBaseline>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };
 
