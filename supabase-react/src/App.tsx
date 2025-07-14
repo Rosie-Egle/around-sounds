@@ -5,84 +5,51 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { supabase } from "clients/supabaseClient";
-import { Session } from "@supabase/supabase-js";
-import AuthPage from "./pages/AuthPage";
-import AccountPage from "./pages/AccountPage";
-import Navigation from "./components/Navigation";
+
 import { ThemeProvider } from "@mui/material/styles";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import { CircularProgress, Box } from "@mui/material";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import AuthPage from "./pages/AuthPage";
+import AccountPage from "./pages/AccountPage";
+import { useUserSession } from "hooks/useUserSession";
+
 import theme from "./theme";
 
-const App = () => {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+const queryClient = new QueryClient();
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
+const AppRoutes = () => {
+  const { data: session, isLoading } = useUserSession();
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
-
-  if (loading) {
-    return (
-      <StrictMode>
-        <ThemeProvider theme={theme}>
-          <StyledThemeProvider theme={theme}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh",
-              }}
-            >
-              Loading...
-            </div>
-          </StyledThemeProvider>
-        </ThemeProvider>
-      </StrictMode>
-    );
+  if (isLoading) {
+    return <CircularProgress color="secondary" size={100} />;
   }
 
   return (
+    <Router>
+      <Routes>
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/account" element={<AccountPage session={session} />} />
+        <Route
+          path="/"
+          element={<Navigate to={session ? "/account" : "/auth"} replace />}
+        />
+      </Routes>
+    </Router>
+  );
+};
+
+const App = () => {
+  return (
     <StrictMode>
-      <ThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>
-          <Router>
-            <Navigation session={session} />
-            <Routes>
-              <Route
-                path="/auth"
-                element={
-                  !session ? <AuthPage /> : <Navigate to="/account" replace />
-                }
-              />
-              <Route
-                path="/account"
-                element={
-                  session ? (
-                    <AccountPage session={session} />
-                  ) : (
-                    <Navigate to="/auth" replace />
-                  )
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  <Navigate to={session ? "/account" : "/auth"} replace />
-                }
-              />
-            </Routes>
-          </Router>
-        </StyledThemeProvider>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <StyledThemeProvider theme={theme}>
+            <AppRoutes />
+          </StyledThemeProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
     </StrictMode>
   );
 };

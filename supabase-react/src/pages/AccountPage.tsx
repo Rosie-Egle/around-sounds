@@ -3,7 +3,7 @@ import Account from "../components/Account";
 import { Session } from "@supabase/supabase-js";
 
 interface AccountPageProps {
-  session: Session;
+  session: Session | null | undefined;
 }
 
 const AccountPage = ({ session }: AccountPageProps) => {
@@ -20,7 +20,7 @@ const AccountPage = ({ session }: AccountPageProps) => {
         <Typography variant="h4" component="h1" gutterBottom>
           Profile Settings
         </Typography>
-        <Account session={session} />
+        {/* <Account session={session} /> */}
       </Box>
     </Container>
   );
