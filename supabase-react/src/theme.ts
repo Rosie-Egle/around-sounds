@@ -10,8 +10,8 @@ const theme = createTheme({
       main: "#cc9efb",
     },
     background: {
-      paper: "#41344c",
-      default: "#2c1f39",
+      paper: "#342d3a",
+      default: "#1f1826",
     },
     error: {
       main: "#cf6679",
